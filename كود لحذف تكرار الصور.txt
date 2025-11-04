@@ -1,0 +1,49 @@
+import os
+from PIL import Image
+import imagehash
+from tqdm import tqdm
+
+# 🗂️ ضع هنا مسار المجلد الذي يحتوي على الصور
+IMAGE_FOLDER = r"C:\Users\z\Desktop\dataset\train\images"   # ← غيّر هذا حسب مكان صورك
+
+# 🧮 نوع الـ Hash المستخدم (يمكن تغييره إلى ahash أو dhash أو whash)
+hash_func = imagehash.phash
+
+# قاموس لتخزين التجزئات
+hash_dict = {}
+
+# عداد الصور المكررة
+duplicates = 0
+
+# قراءة جميع الصور في المجلد
+all_files = [f for f in os.listdir(IMAGE_FOLDER) if f.lower().endswith((".jpg", ".jpeg", ".png", ".bmp", ".gif"))]
+
+print(f"🔍 جاري فحص {len(all_files)} صورة في المجلد...")
+
+for filename in tqdm(all_files, desc="📷 الفحص جارٍ"):
+    file_path = os.path.join(IMAGE_FOLDER, filename)
+    try:
+        with Image.open(file_path) as img:
+            img_hash = hash_func(img)
+
+        # التحقق من وجود تجزئة مشابهة
+        found_duplicate = False
+        for existing_hash in hash_dict:
+            if abs(img_hash - existing_hash) < 5:  # يمكنك ضبط الحساسية
+                found_duplicate = True
+                break
+
+        if found_duplicate:
+            # حذف الصورة المكررة من نفس المجلد
+            os.remove(file_path)
+            duplicates += 1
+        else:
+            hash_dict[img_hash] = filename
+
+    except Exception as e:
+        print(f"⚠️ حدث خطأ في الصورة {filename}: {e}")
+
+print("\n✅ تم الفحص بنجاح!")
+print(f"📸 عدد الصور الإجمالي: {len(all_files)}")
+print(f"🗑️ عدد الصور المكرّرة التي تم حذفها: {duplicates}")
+print(f"📂 تم تنظيف المجلد: {IMAGE_FOLDER}")

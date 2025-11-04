@@ -1,0 +1,8 @@
+codegen
+claude.ai
+label studio
+ال result معلومات عنها وفهمها
+segment anything py meta with label studio 
+git 
+power point
+

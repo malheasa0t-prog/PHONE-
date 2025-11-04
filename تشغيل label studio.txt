@@ -1,0 +1,12 @@
+
+conda create -n labelstudio python=3.10 -y
+
+conda activate labelstudio
+
+
+pip install --upgrade pip setuptools wheel
+
+
+pip install label-studio
+
+label-studio

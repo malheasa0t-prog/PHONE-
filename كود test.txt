@@ -1,0 +1,23 @@
+from ultralytics import YOLO
+# Path to your YOLOv8 model
+model_path = "best.pt"
+model = YOLO(model_path)
+
+# If you want to override names (optional)
+class_names = ['Crack','oil','Dislodged Screen','Scratches','phone good','Dents']
+model.model.names = {i: name for i, name in enumerate(class_names)}
+
+# Source image
+source = "test11.jpg"
+
+# Run inference
+results = model(source, save=True, project="runs/detect", name="exp")
+
+# Print results
+for r in results:
+    for box in r.boxes:
+        x1, y1, x2, y2 = map(int, box.xyxy[0].tolist())
+        conf = box.conf[0].item()
+        cls = int(box.cls[0].item())
+        label = model.model.names[cls]  # use updated mapping
+        print(f"{label} {conf:.2f} at [{x1}, {y1}, {x2}, {y2}]")
