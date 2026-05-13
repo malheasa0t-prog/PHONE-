@@ -1,0 +1,7 @@
+ultralytics
+opencv-python
+Pillow
+ImageHash
+numpy
+tqdm
+PyYAML
