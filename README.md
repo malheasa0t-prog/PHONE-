@@ -9,18 +9,27 @@ training artifacts from earlier experiments.
 
 - Detect common phone-condition classes from images.
 - Support repeatable YOLO model training and inference.
-- Keep preprocessing and evaluation scripts reusable outside the original
-  notebook environment.
+- Keep preprocessing and evaluation scripts reusable outside the original notebook environment.
+- Present training artifacts in a clear structure that recruiters and engineers can review quickly.
+
+## Demo Preview
+
+Add one clear screenshot or short GIF showing the model detecting phone damage.
+Recommended filename:
+
+```markdown
+![Phone Damage Detection Demo](docs/demo-phone-damage.png)
+```
 
 ## Classes
 
 The current inference script is configured for these labels:
 
 - Crack
-- oil
+- Oil
 - Dislodged Screen
 - Scratches
-- phone good
+- Phone Good
 - Dents
 
 Update the class list in `scripts/run_inference.py` if the trained model uses a
@@ -31,7 +40,7 @@ different label order.
 ```text
 TEST.ipynb        Original experimentation notebook
 scripts/          Reusable Python utilities
-model/            Trained model artifacts and YOLO training outputs
+models/           Trained model artifacts and YOLO training outputs
 result.txt        Training/evaluation notes
 ```
 
@@ -77,9 +86,8 @@ python scripts/train_yolo.py --data data.yaml --model yolo11s.pt --epochs 60 --i
 python scripts/run_inference.py --model path/to/best.pt --source path/to/test.jpg
 ```
 
-## Notes
+## Portfolio Notes
 
-Large trained weights are currently kept in the repository for reproducibility.
-For a cleaner production portfolio, future model binaries should be moved to
-GitHub Releases or an external model registry while the repository keeps code,
-configs, and evaluation summaries.
+- Keep at least one representative evaluation image or screenshot in `docs/`.
+- Move large trained weights to GitHub Releases or a model registry when possible.
+- Keep the repository focused on code, configuration, evaluation summaries, and lightweight demo assets.
